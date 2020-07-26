@@ -1,52 +1,103 @@
+//...START BY DOING WHAT IS NECESSARY, THEN WHAT IS POSSIBLE AND SUDDENLY YOU ARE DOING THE IMPOSSIBLE...
 #include <iostream>
+#include <string>
 #include <bits/stdc++.h>
-typedef long long int ll;
-#define fo(i, a, n) for (ll i = a; i < n; i++)
 
 using namespace std;
-inline ll StringToInt(string a, int arr[])
+
+typedef long long ll;
+typedef vector<int> vi;
+typedef vector<ll> vl;
+
+#define pb push_back
+#define fo(i, a, b) for (int i = a; i < b; i++)
+#define sqr(x) ((ll)(x) * (x))
+#define p(a) cout << a << "\n"
+#define fast_io              \
+	ios::sync_with_stdio(0); \
+	cin.tie(0);
+
+inline string IntToString(ll a)
 {
-	char x[1000];
+	char x[100];
+	sprintf(x, "%lld", a);
+	string s = x;
+	return s;
+}
+
+inline ll StringToInt(string a)
+{
+	char x[100];
 	ll res;
 	strcpy(x, a.c_str());
-	fo(i, 0, 1000)
-	{
-
-		sscanf(x[i], "%lld", arr[i]);
-	}
+	sscanf(x, "%lld", &res);
 	return res;
+}
+bool prime(ll no)
+{
+	if (no < 3)
+		return false;
+	int factor = 0;
+	for (int i = 2; i * i <= no; i++)
+	{
+		if (no % i == 0)
+		{
+			return false;
+		}
+	}
+	return true;
+}
+long long lcm(ll a, ll b)
+{
+	return (a * b) / (__gcd(a, b));
+}
+/*.................................................................code starts here.........................................................*/
+
+int occurence(int arr[], int i, int number)
+{
+	int x = 0;
+	for (i; i >= 0; i--)
+	{
+		if (number == arr[i])
+		{
+			x++;
+		}
+	}
+	return x;
+}
+
+void solve()
+{
+	int n;
+	cin >> n;
+	int arr[n];
+	fo(i, 0, n)
+	{
+		cin >> arr[i];
+	}
+	sort(arr, arr + n);
+	int a = occurence(arr, n - 1, arr[n - 1]);
+	if (a > 1)
+	{
+		printf("%0.7f\n", a / n);
+	}
+	else
+	{
+		a = occurence(arr, n - 2, arr[n - 2]);
+		printf("%0.7f\n", a / n);
+	}
 }
 
 int main()
 {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	char num[1000];
-	int arr[1000];
-	unsigned long long int product = 0;
-	fo(i, 0, 1000)
-	{
-		cin >> num[i];
-		arr[i] = num[i];
-	}
-	fo(j, 0, 5)
-	{
-		cout << arr[j] << endl;
-	}
-	unsigned long long int x = 1;
-	// fo(i, 0, 1000)
-	// {
-	// 	x = 1;
-	// 	fo(j, 0, 4)
-	// 	{
-	// 		x *= arr[j];
-	// 	}
-	// 	if (x > product)
-	// 	{
-	// 		product = x;
-	// 	}
-	// }
-	cout << "-------- " << product << endl;
+	fast_io int t;
 
+	freopen("pinput.txt", "r", stdin);
+	freopen("poutput.txt", "w", stdout);
+	cin >> t;
+	while (t--)
+	{
+		solve();
+	}
 	return 0;
 }
