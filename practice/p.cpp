@@ -53,7 +53,7 @@ long long lcm(ll a, ll b)
 }
 /*.................................................................code starts here.........................................................*/
 
-ll dist(ll y2, ll y1, ll x2, ll x1)
+float dist(ll y2, ll y1, ll x2, ll x1)
 {
 	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
@@ -63,103 +63,92 @@ void solve()
 	// cin >> n;
 	ll x1, x2, y1, y2, minx, miny, maxx, maxy;
 	ll points = 0;
+	bool isdone = false;
 	cin >> x1 >> y1 >> x2 >> y2;
-	bool increasing = y2 > y1 ? true : false;
-	ll totaldis = dist(y2, y1, x2, x1);
-	if (increasing)
+	bool isx1small = x1 <= x2 ? true : false;
+	bool increasing = y2 >= y1 ? true : false;
+	float totaldis = dist(y2, y1, x2, x1);
+	if (increasing && isx1small)
 	{
-		fo(i, min(x1, x2) + 1, max(x1, x2))
+		fo(i, x1, x2 + 1)
 		{
-			fo(j, y1 + 1, y2)
+			fo(j, y1, y2 + 1)
 			{
 				if ((j - y1) * (x2 - x1) == (i - x1) * (y2 - y1))
 				{
-					cout << totaldis / dist(j, y1, i, min(x1, y1)) << endl;
-					i = max(x1, y1);
-					j = y2;
+					if (i == min(x1, x2) && j == y1)
+					{
+					}
+					else
+					{
+
+						float pdist = dist(j, y1, i, min(x1, x2));
+						printf("point x: %d,   y: %d\n", i, j);
+						printf("point xstart : %d,   ystart : %d\n", min(x1, x2), j);
+						printf("tDist: %f,   pdist: %f\n", totaldis, pdist);
+
+						float k = totaldis / pdist;
+						cout << "k: " << k << endl;
+
+						// if (totaldis == pdist * k)
+						// {
+						// 	cout << k - 1 << endl;
+						// }
+						// else
+						// {
+
+						// 	cout << k << endl;
+						// }
+						i = max(x1, x2);
+						j = y2;
+						isdone = true;
+					}
 				}
 			}
 		}
 	}
 	else
 	{
-		fo(i, min(x1, x2) + 1, max(x1, x2))
+		fo(i, min(x1, x2), max(x1, x2) + 1)
 		{
-			fo(j, y2 + 1, y1)
+			fo(j, y2, y1 + 1)
 			{
 				if ((j - y1) * (x2 - x1) == (i - x1) * (y2 - y1))
 				{
-					cout << totaldis / dist(j, y2, i, min(x1, y1)) << endl;
-					i = max(x1, x2);
-					j = y1;
+					if (i == min(x1, x2) && j == y2)
+					{
+					}
+					else
+					{
+
+						float pdist = dist(j, y2, i, min(x1, x2));
+						printf("point x: %d,   y: %d\n", i, j);
+						printf("tDist: %f,   pdist: %f\n", totaldis, pdist);
+						float k = totaldis / pdist;
+						cout << "k: " << k << endl;
+						// if (totaldis == pdist * k)
+						// {
+						// 	cout << k - 1 << endl;
+						// }
+						// else
+						// {
+
+						// 	cout << k << endl;
+						// }
+						i = max(x1, x2);
+						j = y1;
+						isdone = true;
+					}
 				}
 			}
 		}
 	}
-	// cout << points << endl;
+	if (!isdone)
+	{
+
+		cout << points << endl;
+	}
 }
-// void solve()
-// {
-// 	// int n;
-// 	// cin >> n;
-// 	ll x1, x2, y1, y2, minx, miny, maxx, maxy;
-// 	ll points = 0;
-// 	cin >> x1 >> y1 >> x2 >> y2;
-// 	minx = min(x1, x2);
-// 	miny = min(y1, y2);
-// 	maxx = max(x1, x2);
-// 	maxy = max(y1, y2);
-// 	ll a, b;
-// 	bool flag = true;
-// 	if (miny != y1)
-// 	{
-// 		flag = false;
-// 	}
-// 	fo(i, minx + 1, maxx)
-// 	{
-// 		fo(j, miny + 1, maxy)
-// 		{
-// 			if ((j - y1) * (x2 - x1) == (i - x1) * (y2 - y1))
-// 			{
-// 				// printf("x: %d \ty: %d\n", i, j);
-// 				a = i - minx;
-// 				if (flag)
-// 				{
-
-// 					b = j - miny;
-// 				}
-// 				else
-// 				{
-// 					b = j - maxy;
-// 				}
-// 				points++;
-// 				i = maxx;
-// 				j = maxy;
-// 			}
-// 		}
-// 	}
-// 	ll x = minx + a + a, y = miny + b + b;
-// 	if (flag)
-// 	{
-
-// 		while (x < maxx && y < maxy)
-// 		{
-// 			points++;
-// 			x += a;
-// 			y += b;
-// 		}
-// 	}
-// 	else
-// 	{
-// 		while (x < maxx && y > miny)
-// 		{
-// 			points++;
-// 			x += a;
-// 			y += b;
-// 		}
-// 	}
-// 	cout << points << endl;
-// }
 
 int main()
 {
